@@ -15,6 +15,11 @@ links = 3; % Number of links in addition to base link
 
 time = 0:dt:500; % Simulation time
 
+% Uncomment these lines to save a video
+%videoObject = VideoWriter('../videos/UTLTRASpineMPC4TetraCircular.avi');
+%videoObject.Quality = 100;
+%videoObject.FrameRate = 5;
+
 %% Initialize Plot
 Figs = figure('Units','Normalized', 'outerposition', [0 0 1 1]);
 M = struct('cdata', cell(1,round(length(time)/10)), 'colormap', cell(1,round(length(time)/10)));
