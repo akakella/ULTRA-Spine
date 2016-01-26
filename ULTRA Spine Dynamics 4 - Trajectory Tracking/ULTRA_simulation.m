@@ -15,10 +15,13 @@ links = 3; % Number of links in addition to base link
 
 time = 0:dt:500; % Simulation time
 
-% Uncomment these lines to save a video
-%videoObject = VideoWriter('../videos/UTLTRASpineMPC4TetraCircular.avi');
-%videoObject.Quality = 100;
-%videoObject.FrameRate = 5;
+% To save a video, uncomment:
+% - the following three initialization lines
+% - the getframe call within the last loop
+% - the open, save, and close lines at the end of this script
+videoObject = VideoWriter('../videos/UTLTRASpineMPC4TetraCircular.avi');
+videoObject.Quality = 100;
+videoObject.FrameRate = 5;
 
 %% Initialize Plot
 Figs = figure('Units','Normalized', 'outerposition', [0 0 1 1]);
@@ -226,5 +229,13 @@ for t = 1:((M-1)+offset)
         dx(k) = systemStates(k, 7); dy(k) = systemStates(k, 8); dz(k) = systemStates(k, 9);
         dT(k) = systemStates(k, 10); dG(k) = systemStates(k, 11); dP(k) = systemStates(k, 12);
     end
+    
+    % Record this frame for a video
+    videoFrames(t) = getframe(gcf);
 end
 plot3(actual_traj(1, :), actual_traj(2, :), actual_traj(3, :), 'g', 'LineWidth', 2);
+
+% Uncomment these lines to save the video.
+open(videoObject);
+writeVideo(videoObject, videoFrames);
+close(videoObject);
